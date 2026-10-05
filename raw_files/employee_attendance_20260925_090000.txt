@@ -1,0 +1,4 @@
+employee_id,employee_name,department,check_in_time
+EMP_301,Amit Verma,Engineering,08:55:12
+EMP_302,Priya Nair,Marketing,08:58:45
+EMP_303,Rohit Kulkarni,Operations,09:04:10

@@ -1,0 +1,4 @@
+order_id,customer_id,product_name,total_amount
+ORD_1001,CUST_501,Wireless Mouse,1499.00
+ORD_1002,CUST_502,Mechanical Keyboard,3499.00
+ORD_1003,CUST_503,USB-C Hub,1299.00

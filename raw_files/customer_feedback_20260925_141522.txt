@@ -1,0 +1,4 @@
+feedback_id,customer_id,rating,comments
+FDBK_801,CUST_501,5,Fast delivery and genuine product
+FDBK_802,CUST_620,2,Packaging was damaged during transit
+FDBK_803,CUST_711,4,Good quality for the price
