@@ -1,0 +1,4 @@
+id,name,address,amount
+7,Sam,Tokyo,180
+8,Yuki,Tokyo,360
+9,Kenji,Tokyo,275
