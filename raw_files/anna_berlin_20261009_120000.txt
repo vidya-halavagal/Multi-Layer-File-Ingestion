@@ -1,0 +1,3 @@
+id,fullname,city,price
+12,Anna,Berlin,410
+13,Max,Berlin,230
