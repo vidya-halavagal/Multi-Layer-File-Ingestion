@@ -29,26 +29,30 @@ def fetch_target_files(target_dir: str) -> list[str]:
 
 
 def ensure_directory(directory_path: str) -> None:
-    """Create a folder if it is missing, so later steps never fail on a missing path."""
+    """Create a folder if it is missing, so later steps never fail on a missing path.
+
+    Args:
+        directory_path: Path of the folder to create.
+
+    Returns:
+        None. Does nothing if the folder already exists.
+    """
     os.makedirs(directory_path, exist_ok=True)
 
 
-def is_unprocessed(filename: str, processed_folder: str) -> bool:
-    """
-    Description:
-        Check whether a file has not already been processed.
+def is_unprocessed(file_name: str, processed_folder: str) -> bool:
+    """Check whether a file has not already been processed.
 
     Args:
-        filename (str): Name of the file to check.
-        processed_folder (str): Path to the processed directory.
+        file_name: Name of the file to check.
+        processed_folder: Path to the processed directory.
 
     Returns:
-        bool: True if the filename is not in the processed
-              directory; otherwise, False.
+        bool: True if the file_name is not in the processed folder, otherwise False.
     """
 
     # List processed files and check whether this file is absent
-    return filename not in os.listdir(processed_folder)
+    return file_name not in os.listdir(processed_folder)
 
 
 def read_header_line(file_path: str) -> str:
