@@ -1,0 +1,4 @@
+id,name,address,amount
+4,Mary,Paris,300
+5,Sophie,Paris,520
+6,Luc,Paris,210
