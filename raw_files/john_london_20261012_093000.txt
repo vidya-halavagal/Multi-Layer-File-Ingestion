@@ -1,4 +1,0 @@
-id,name,address,amount
-1,John,London,250
-2,Emma,London,400
-3,Liam,London,150

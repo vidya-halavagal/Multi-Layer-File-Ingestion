@@ -1,3 +1,0 @@
-id,name,address,amount
-10,Ravi,Delhi,330
-11,Anya,Delhi,190
