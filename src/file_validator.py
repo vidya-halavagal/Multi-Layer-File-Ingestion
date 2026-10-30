@@ -2,7 +2,7 @@ import re
 
 
 def is_valid_file_name(file_name: str, pattern: str) -> bool:
-    """Check whether a file name matches <name>_<address>_<date>_<time>.txt format.
+    """Check whether a file name matches <name>_<address>_<date>.txt format.
 
     Args:
         file_name: Name of the file to check.
