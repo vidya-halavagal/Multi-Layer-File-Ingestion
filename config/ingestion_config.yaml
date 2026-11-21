@@ -1,0 +1,28 @@
+# Directory configuration
+paths:
+  target_directory: "data/raw_files"    # Directory containing incoming TXT files
+  processed_directory: "data/processed" # Directory for successfully processed files
+  rejected_directory: "data/rejected"   # Directory for rejected files
+  log_directory: "logs"                 # Directory for application log files
+
+# File validation configuration
+file_validation:
+  # Expected filename format: name_address_date.txt
+  file_name_pattern: '^[a-zA-Z]+_[a-zA-Z]+_\d{8}\.txt$'
+
+  # column names and types, in file order
+  file_columns:
+    id: integer
+    name: string
+    address: string
+    amount: double
+
+# Polling and execution configuration
+polling:
+  interval_minutes: 5           # Time interval between polling cycle starts
+  execution_budget_minutes: 2   # Maximum time allocated for processing in each cycle
+
+# Database table configuration
+tables:
+  audit_table_name: "ingested_files"     # Table storing file ingestion audit history
+  data_table_name: "ingested_records"    # Table storing successfully ingested records
