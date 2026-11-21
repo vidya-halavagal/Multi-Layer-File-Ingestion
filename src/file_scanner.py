@@ -28,18 +28,6 @@ def fetch_target_files(target_dir: str) -> list[str]:
         return []
 
 
-def ensure_directory(directory_path: str) -> None:
-    """Create a folder if it is missing, so later steps never fail on a missing path.
-
-    Args:
-        directory_path: Path of the folder to create.
-
-    Returns:
-        None. Does nothing if the folder already exists.
-    """
-    os.makedirs(directory_path, exist_ok=True)
-
-
 def is_unprocessed(file_name: str, processed_folder: str) -> bool:
     """Check whether a file has not already been processed.
 
