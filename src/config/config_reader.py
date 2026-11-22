@@ -166,23 +166,49 @@ def get_expected_columns(config: dict[str, Any]) -> list[str]:
     return list(file_columns)
 
 
-def get_file_name_pattern(config: dict[str, Any]) -> str:
+def get_file_name_pattern(config: dict[str, Any]) -> re.Pattern:
     """
-    Extract the file name pattern from the loaded configuration.
+    Extract, validate, and compile the filename pattern from configuration.
 
     Args:
         config: Configuration dictionary loaded from YAML.
 
     Returns:
-        Regular expression used to validate incoming file names.
+        A compiled regex pattern for filename validation.
 
     Raises:
-        KeyError: If the required configuration section or key is missing.
+        KeyError: If the required configuration key is missing.
+        TypeError: If the filename pattern is not a string.
+        ValueError: If the pattern is empty or contains invalid regex syntax.
     """
+
     try:
-        return config["file_validation"]["file_name_pattern"]
+        # Extract the filename pattern from the YAML configuration.
+        pattern = config["file_validation"]["file_name_pattern"]
+
+    # Raise a descriptive error if a required configuration key is missing.
     except KeyError as error:
         raise KeyError(f"Missing configuration key: {error}") from error
+
+    # Ensure the filename pattern is provided as a string.
+    if not isinstance(pattern, str):
+        raise TypeError("file_name_pattern must be a string")
+
+    # Remove accidental leading and trailing whitespace.
+    pattern = pattern.strip()
+
+    # Reject empty or whitespace-only filename patterns.
+    if not pattern:
+        raise ValueError("file_name_pattern must not be empty")
+
+    try:
+        # Compile the regex pattern and return it for reuse.
+        return re.compile(pattern)
+
+    # Convert invalid regex syntax into a configuration validation error.
+    except re.error as error:
+        raise ValueError(f"Invalid file_name_pattern: {error}") from error
+
 
 
 # --- Build ---
