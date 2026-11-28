@@ -20,7 +20,7 @@ file_validation:
 # Polling and execution configuration
 polling:
   interval_minutes: 5           # Time interval between polling cycle starts
-  execution_budget_minutes: 2   # Maximum time allocated for processing in each cycle
+  execution_budget_minutes: 4   # Maximum time allocated for processing in each cycle
 
 # Database table configuration
 tables:
