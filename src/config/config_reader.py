@@ -1,5 +1,5 @@
 """Configuration reader: loads the YAML settings and builds the Spark schema."""
-
+import re
 from pathlib import Path
 from typing import Any
 
@@ -208,6 +208,61 @@ def get_file_name_pattern(config: dict[str, Any]) -> re.Pattern:
     # Convert invalid regex syntax into a configuration validation error.
     except re.error as error:
         raise ValueError(f"Invalid file_name_pattern: {error}") from error
+
+
+def get_polling_settings(config: dict[str, Any]) -> dict[str, int | float]:
+    """
+    Extract and validate polling interval and execution budget settings.
+
+    Args:
+        config: Configuration dictionary loaded from YAML.
+
+    Returns:
+        A dictionary containing the validated polling interval and
+        execution budget, both in minutes.
+
+    Raises:
+        KeyError: If a required configuration key is missing.
+        TypeError: If a setting has an invalid data type.
+        ValueError: If a setting is non-positive or the execution budget
+                    is not less than the polling interval.
+    """
+    try:
+        # Read both settings from the polling section.
+        polling = config["polling"]
+        interval = polling["interval_minutes"]
+        budget = polling["execution_budget_minutes"]
+
+    except KeyError as error:
+        raise KeyError(f"Missing configuration key: {error}") from error
+
+    # bool is a subclass of int, so True would otherwise pass as 1.
+    if isinstance(interval, bool) or isinstance(budget, bool):
+        raise TypeError("Polling settings must not contain boolean values")
+
+    # Decimals are allowed, for example 0.5 minutes.
+    if not isinstance(interval, (int, float)):
+        raise TypeError("interval_minutes must be a number")
+
+    if not isinstance(budget, (int, float)):
+        raise TypeError("execution_budget_minutes must be a number")
+
+    # A zero or negative time limit makes no sense.
+    if interval <= 0 or budget <= 0:
+        raise ValueError("Polling settings must be greater than zero")
+
+    # Both values are in minutes, so they can be compared directly.
+    # The budget must be shorter than the interval, or there is no rest time.
+    if budget >= interval:
+        raise ValueError(
+            f"execution_budget_minutes ({budget}) must be less than "
+            f"interval_minutes ({interval})"
+        )
+
+    return {
+        "interval_minutes": interval,
+        "execution_budget_minutes": budget,
+    }
 
 
 
